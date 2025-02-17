@@ -1,0 +1,12 @@
+ARITFACTS_ROOT_DIR_NAME: artifacts
+
+DATA:
+  ROOT_DIR_NAME: data
+  INGESTION:
+    ROOT_DIR_NAME: ingestion
+    FEATURE_STORE:
+      ROOT_DIR_NAME: feature_store
+      ZIP_FILE_NAME: data.zip
+    INGESTED: 
+      ROOT_DIR_NAME: ingested
+      
