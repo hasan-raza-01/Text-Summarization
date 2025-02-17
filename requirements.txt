@@ -1,0 +1,10 @@
+mlflow
+dagshub
+dvc
+fastapi
+uvicorn
+python-dotenv
+python-box
+ipykernel
+
+# -e .
