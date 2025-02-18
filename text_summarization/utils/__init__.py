@@ -1,11 +1,14 @@
 from text_summarization.exception import CustomException
 from box import ConfigBox
 from pathlib import Path
+from rouge import Rouge
 import sys
 import os
 import yaml
 import pickle
 import json
+
+
 
 def create_dirs(path:str)->None:
     """creates directory if path do not exists
@@ -113,4 +116,31 @@ def load_json(path:str)->dict:
     except Exception as e:
         raise CustomException(e, sys)
     
+
+def evaluate_summary(reference:str, generated:str)->list[dict]:
+    """calculates the metrics on the basis of \'Rouge\'
+
+    Args:
+        reference (str): original summary(y_true)
+        generated (str): preidcted summary(y_pred)
+
+    Returns:
+        list[dict]: [
+
+        ROUGE-1: Unigram (word-level) overlap
+
+        ROUGE-2: Bigram overlap
+
+        ROUGE-L: Longest common subsequence
+
+        ] 
+    """
+    try:
+        # calculates socre
+        rouge = Rouge()
+        scores = rouge.get_scores(generated, reference)
+        return scores
+    except Exception as e:
+        raise CustomException(e, sys)
+
 

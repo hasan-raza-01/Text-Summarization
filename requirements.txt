@@ -10,5 +10,7 @@ datasets
 transformers
 langchain-community
 langchain-huggingface
+torch
+rouge
 
 # -e .

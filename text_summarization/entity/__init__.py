@@ -16,3 +16,15 @@ class DataIngestionArtifacts:
     SOURCE_URI:str
 
 
+@dataclass(frozen=True)
+class DataTransformationArtifacts:
+    ARITFACTS_ROOT_DIR_PATH:Path
+    DATA_ROOT_DIR_PATH:Path
+    TRANSFORMATION_ROOT_DIR_PATH:Path
+    TRAIN_DATA_DIR_PATH:Path
+    VALIDATION_DATA_DIR_PATH:Path
+    TEST_DATA_DIR_PATH:Path
+    TOKENIZER_PATH:Path
+    MODEL_REPO_ID:str
+
+

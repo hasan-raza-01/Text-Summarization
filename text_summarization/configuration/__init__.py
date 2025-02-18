@@ -1,5 +1,6 @@
 from text_summarization.constants import (
-    DataIngestionConstants
+    DataIngestionConstants,
+    DataTransformationConstants
 )
 from dataclasses import dataclass
 import os
@@ -17,5 +18,17 @@ class DataIngestionConfig:
     ZIP_FILE_PATH = os.path.join(FEATURE_STORE_ROOT_DIR_PATH, DataIngestionConstants.ZIP_FILE_NAME)
     # URI'S
     SOURCE_URI = DataIngestionConstants.SOURCE_URI
+
+
+@dataclass(frozen=True)
+class DataTransformationConfig:
+    ARITFACTS_ROOT_DIR_PATH=os.path.join(DataTransformationConstants.ARITFACTS_ROOT_DIR_NAME)
+    DATA_ROOT_DIR_PATH=os.path.join(ARITFACTS_ROOT_DIR_PATH, DataTransformationConstants.DATA_ROOT_DIR_NAME)
+    TRANSFORMATION_ROOT_DIR_PATH=os.path.join(DATA_ROOT_DIR_PATH, DataTransformationConstants.TRANSFORMATION_ROOT_DIR_NAME)
+    TRAIN_DATA_DIR_PATH=os.path.join(TRANSFORMATION_ROOT_DIR_PATH, DataTransformationConstants.TRAIN_DATA_DIR_NAME)
+    VALIDATION_DATA_DIR_PATH=os.path.join(TRANSFORMATION_ROOT_DIR_PATH, DataTransformationConstants.VALIDATION_DATA_DIR_NAME)
+    TEST_DATA_DIR_PATH=os.path.join(TRANSFORMATION_ROOT_DIR_PATH, DataTransformationConstants.TEST_DATA_DIR_NAME)
+    TOKENIZER_PATH=os.path.join(TRANSFORMATION_ROOT_DIR_PATH, DataTransformationConstants.TOKENIZER_NAME)
+    MODEL_REPO_ID=DataTransformationConstants.MODEL_REPO_ID
 
 

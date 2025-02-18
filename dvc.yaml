@@ -6,4 +6,14 @@ stages:
       - config/config.yaml
     outs:
       - artifacts/data/ingestion
+  data_transformation:
+    cmd: python text_summarization/pipeline/stage_02_data_transformation.py
+    deps:
+      - text_summarization/pipeline/stage_02_data_transformation.py
+      - config/config.yaml
+      - artifacts/data/ingestion/ingested/samsum_dataset/train
+      - artifacts/data/ingestion/ingested/samsum_dataset/validation
+      - artifacts/data/ingestion/ingested/samsum_dataset/test
+    outs:
+      - artifacts/data/transformation
   
