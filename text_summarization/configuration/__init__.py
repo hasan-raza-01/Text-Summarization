@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import os
 
 
-@dataclass
+@dataclass(frozen=True)
 class DataIngestionConfig:
     # DIR'S
     ARITFACTS_ROOT_DIR_PATH = os.path.join(DataIngestionConstants.ARITFACTS_ROOT_DIR_NAME)

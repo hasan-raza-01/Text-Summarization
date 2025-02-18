@@ -6,5 +6,9 @@ uvicorn
 python-dotenv
 python-box
 ipykernel
+datasets
+transformers
+langchain-community
+langchain-huggingface
 
 # -e .

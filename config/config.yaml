@@ -2,6 +2,7 @@ ARITFACTS_ROOT_DIR_NAME: artifacts
 
 DATA:
   ROOT_DIR_NAME: data
+
   INGESTION:
     ROOT_DIR_NAME: ingestion
     FEATURE_STORE:
@@ -10,3 +11,10 @@ DATA:
     INGESTED: 
       ROOT_DIR_NAME: ingested
       
+  TRANSFORMATION:
+    ROOT_DIR_NAME: transformation
+    TRAIN_DATA_DIR_NAME: train
+    VALIDATION_DATA_DIR_NAME: validation
+    TEST_DATA_DIR_NAME: test
+
+  

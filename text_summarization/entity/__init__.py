@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-@dataclass
+@dataclass(frozen=True)
 class DataIngestionArtifacts:
     # DIR'S
     ARITFACTS_ROOT_DIR_PATH:Path

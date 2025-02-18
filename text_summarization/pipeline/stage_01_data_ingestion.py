@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-from text_summarization.components import (
-    DataIngestionComponents
-)
+from text_summarization.components.data_ingestion import DataIngestionComponents
 from text_summarization.configuration import (
     DataIngestionConfig
 )
