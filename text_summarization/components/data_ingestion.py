@@ -25,9 +25,12 @@ class DataIngestionComponents:
             zip_file_path (str): path to save file locally
         """
         try:
+            logging.info("In __download")
+
             logging.info("Downloading........")
             urlretrieve(source_uri, zip_file_path)
             logging.info("Download complete.")            
+            logging.info("Out __download")
         except Exception as e:
             logging.error(e)
             CustomException(e, sys)
@@ -41,10 +44,13 @@ class DataIngestionComponents:
             raw_data_dir (str): path of directory for extraction
         """
         try:
+            logging.info("In __extract")
 
             with ZipFile(zip_file_path, "r") as zip_ref:
                 zip_ref.extractall(raw_data_dir)
                 logging.info("zip extraction comleted.")
+
+            logging.info("Out __extract")
         except Exception as e:
             logging.error(e)
             raise CustomException(e, sys)
@@ -53,22 +59,27 @@ class DataIngestionComponents:
         """Runs Data ingestion
         """
         try:
+            logging.info("In start_data_ingestion")
+
             # create required dir's
             create_dirs(self.__data_ingestion_config.ARITFACTS_ROOT_DIR_PATH)
             create_dirs(self.__data_ingestion_config.DATA_ROOT_DIR_PATH)
             create_dirs(self.__data_ingestion_config.INGESTION_ROOT_DIR_PATH)
             create_dirs(self.__data_ingestion_config.FEATURE_STORE_ROOT_DIR_PATH)
             create_dirs(self.__data_ingestion_config.INGESTED_ROOT_DIR_PATH)
+            logging.info("Dir's creation completed")
 
             # get required variables
             uri = self.__data_ingestion_config.SOURCE_URI
             zip_file_path=self.__data_ingestion_config.ZIP_FILE_PATH
             ingested_data_dir = self.__data_ingestion_config.INGESTED_ROOT_DIR_PATH
+            logging.info("collected required variables")
 
             # run process
             self.__download(uri, zip_file_path)
             self.__extract(zip_file_path, ingested_data_dir)
 
+            logging.info("Out start_data_ingestion")
             return self.__data_ingestion_config
         except Exception as e:
             logging.exception(e)

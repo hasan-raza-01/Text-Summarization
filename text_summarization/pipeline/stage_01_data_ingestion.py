@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from text_summarization.logger import logging
 from text_summarization.components.data_ingestion import DataIngestionComponents
 from text_summarization.configuration import (
     DataIngestionConfig
@@ -20,8 +21,10 @@ STAGE_NAME = "Data Ingestion"
 
 if __name__=="__main__":
     print(f"\n>>>>>>>>>>>>>>>>>>>>> {STAGE_NAME} initiated <<<<<<<<<<<<<<<<<<<<<")
+    logging.info(f"\n>>>>>>>>>>>>>>>>>>>>> {STAGE_NAME} initiated <<<<<<<<<<<<<<<<<<<<<")
     obj = DataIngestionPipeline()
     obj.main()
+    logging.info(f"\n>>>>>>>>>>>>>>>>>>>>> {STAGE_NAME} completed <<<<<<<<<<<<<<<<<<<<<")
     print(f"\n>>>>>>>>>>>>>>>>>>>>> {STAGE_NAME} completed <<<<<<<<<<<<<<<<<<<<<")
 
 
