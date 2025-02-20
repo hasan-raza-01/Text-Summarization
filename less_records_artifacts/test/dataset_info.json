@@ -1,0 +1,46 @@
+{
+  "builder_name": "csv",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "csv",
+  "dataset_size": 1052,
+  "description": "",
+  "download_checksums": {
+    "C:/DsProjects/Projects/Text_Summarization/notebook/data/test.csv": {
+      "num_bytes": 1069,
+      "checksum": null
+    }
+  },
+  "download_size": 1069,
+  "features": {
+    "id": {
+      "dtype": "int64",
+      "_type": "Value"
+    },
+    "dialogue": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "summary": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 2121,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 1052,
+      "num_examples": 2,
+      "dataset_name": "csv"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

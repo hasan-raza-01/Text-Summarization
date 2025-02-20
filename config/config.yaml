@@ -18,4 +18,9 @@ DATA:
     TEST_DATA_DIR_NAME: test
     TOKENIZER_NAME: tokenizer
 
-  
+MODEL_TRAINER: 
+  ROOT_DIR_NAME: model
+  BASE_ESTIMATOR_NAME: base_estimator
+  FINETUNED_ESTIMATOR_NAME: finetuned_estimator
+  PARAMS_FILE_NAME: params.json
+

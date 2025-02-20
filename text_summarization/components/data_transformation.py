@@ -18,12 +18,11 @@ class DataTranformationComponents:
     __data_transformation_config:DataTransformationArtifacts
 
     @staticmethod
-    def __get_tokenizer(repo_id:str, path:Path=None) -> AutoTokenizer:
+    def __get_tokenizer(repo_id:str) -> AutoTokenizer:
         """get tokenizer from hugging face using repo id and hugging face token
 
         Args:
             repo_id (str): repository id of model
-            path (Path): Path to save tokenizer locally
 
         Returns:
             AutoTokenizer: tokenizer for model available in repository
@@ -33,10 +32,6 @@ class DataTranformationComponents:
             # get tokenizer
             tokenizer = AutoTokenizer.from_pretrained(repo_id)
             logging.info(f"tokenizer pulled from {repo_id}")
-
-            # save tokenizer to local
-            tokenizer.save_pretrained(Path(path))
-            logging.info(f"tokenizer saved at {path}")
 
             logging.info("Out __get_tokenizer")
             return tokenizer
@@ -57,14 +52,27 @@ class DataTranformationComponents:
         """
         try:
             # Pre-process input text
-            output =  tokenizer(record["dialogue"], truncation=True, padding="longest", return_tensors="pt", max_length=1024).to(device)
-            return output
+            tokenized_record_inputs =  tokenizer(record["dialogue"], truncation=True, max_length=512).to(device)
+            
+            with tokenizer.as_target_tokenizer():
+                tokenized_record_outputs =  tokenizer(record["summary"], truncation=True, max_length=128).to(device)
+
+            return {
+                "input_ids": tokenized_record_inputs["input_ids"], 
+                "attention_mask": tokenized_record_inputs["attention_mask"], 
+                "labels": tokenized_record_outputs["input_ids"]
+            }
         except Exception as e:
             logging.exception(e)
             raise CustomException(e, sys)
         
 
     def start_data_transformation(self) -> DataTransformationArtifacts:
+        """starts the process of data transformation
+
+        Returns:
+            DataTransformationArtifacts: path of artifacts created throughout data transformation process
+        """
         try:
             logging.info("In start_data_transformation")
             # create required dir's
@@ -89,14 +97,13 @@ class DataTranformationComponents:
 
             # get tokenizer
             repo_id = self.__data_transformation_config.MODEL_REPO_ID
-            tokenizer_path = self.__data_transformation_config.TOKENIZER_PATH
-            tokenizer = self.__get_tokenizer(repo_id, tokenizer_path)
+            tokenizer = self.__get_tokenizer(repo_id)
             logging.info("tokenizer collected successfully")
 
             # start transformation
-            transformed_train_data = train_data.map(self.__transform, fn_kwargs={"tokenizer":tokenizer, "device":device})
-            transformed_validation_data = validation_data.map(self.__transform, fn_kwargs={"tokenizer":tokenizer, "device":device})
-            transformed_test_data = test_data.map(self.__transform, fn_kwargs={"tokenizer":tokenizer, "device":device})
+            transformed_train_data = train_data.map(self.__transform, batched=True, fn_kwargs={"tokenizer":tokenizer, "device":device})
+            transformed_validation_data = validation_data.map(self.__transform, batched=True, fn_kwargs={"tokenizer":tokenizer, "device":device})
+            transformed_test_data = test_data.map(self.__transform, batched=True, fn_kwargs={"tokenizer":tokenizer, "device":device})
             logging.info("transformed data collected")
 
             # get variables of path for train, validation and test
@@ -110,10 +117,15 @@ class DataTranformationComponents:
             logging.info(f"transformed train data saved at {train_data_path}")
 
             transformed_validation_data.save_to_disk(validation_data_path)
-            logging.info(f"transformed validation data saved at {train_data_path}")
+            logging.info(f"transformed validation data saved at {validation_data_path}")
 
             transformed_test_data.save_to_disk(test_data_path)
-            logging.info(f"transformed test data saved at {train_data_path}")
+            logging.info(f"transformed test data saved at {test_data_path}")
+
+            # save tokenizer to local
+            tokenizer_path = self.__data_transformation_config.TOKENIZER_PATH
+            tokenizer.save_pretrained(Path(tokenizer_path))
+            logging.info(f"tokenizer saved at {tokenizer_path}")
 
             logging.info("Out start_data_transformation")
             return self.__data_transformation_config

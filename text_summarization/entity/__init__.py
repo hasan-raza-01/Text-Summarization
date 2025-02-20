@@ -28,3 +28,12 @@ class DataTransformationArtifacts:
     MODEL_REPO_ID:str
 
 
+@dataclass(frozen=True)
+class ModelTrainerArtifacts:
+    ARITFACTS_ROOT_DIR_PATH:Path
+    MODEL_TRAINER_ROOT_DIR_PATH:Path
+    BASE_ESTIMATOR_PATH:Path
+    FINETUNED_ESTIMATOR_PATH:Path
+    PARAMS_FILE_PATH:Path
+
+

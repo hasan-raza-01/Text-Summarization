@@ -1,6 +1,3 @@
-mlflow
-dagshub
-dvc
 fastapi
 uvicorn
 python-dotenv
@@ -12,5 +9,8 @@ langchain-community
 langchain-huggingface
 torch
 rouge
+accelerate
+rouge-score
+evaluate
 
 # -e .

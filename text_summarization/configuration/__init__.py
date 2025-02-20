@@ -1,8 +1,10 @@
 from text_summarization.constants import (
     DataIngestionConstants,
-    DataTransformationConstants
+    DataTransformationConstants,
+    ModelTrainerConstants
 )
 from dataclasses import dataclass
+from pathlib import Path
 import os
 
 
@@ -30,5 +32,14 @@ class DataTransformationConfig:
     TEST_DATA_DIR_PATH=os.path.join(TRANSFORMATION_ROOT_DIR_PATH, DataTransformationConstants.TEST_DATA_DIR_NAME)
     TOKENIZER_PATH=os.path.join(TRANSFORMATION_ROOT_DIR_PATH, DataTransformationConstants.TOKENIZER_NAME)
     MODEL_REPO_ID=DataTransformationConstants.MODEL_REPO_ID
+
+
+@dataclass(frozen=True)
+class ModelTrainerConfig:
+    ARITFACTS_ROOT_DIR_PATH = os.path.join(ModelTrainerConstants.ARITFACTS_ROOT_DIR_NAME)
+    MODEL_TRAINER_ROOT_DIR_PATH = os.path.join(ARITFACTS_ROOT_DIR_PATH, ModelTrainerConstants.MODEL_TRAINER_ROOT_DIR_NAME)
+    BASE_ESTIMATOR_PATH = os.path.join(MODEL_TRAINER_ROOT_DIR_PATH, ModelTrainerConstants.BASE_ESTIMATOR_NAME)
+    FINETUNED_ESTIMATOR_PATH = os.path.join(MODEL_TRAINER_ROOT_DIR_PATH, ModelTrainerConstants.FINETUNED_ESTIMATOR_NAME)
+    PARAMS_FILE_PATH = Path(ModelTrainerConstants.PARAMS_FILE_NAME)
 
 

@@ -183,4 +183,4 @@ artifacts/
 *.egg-info
 template.py
 .env
-setup.py
+pegasus_finetuned_model
