@@ -1,3 +1,4 @@
+dvc
 fastapi
 uvicorn
 python-dotenv

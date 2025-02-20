@@ -38,3 +38,13 @@ class ModelTrainerArtifacts:
     PARAMS_FILE_PATH:Path
 
 
+@dataclass(frozen=True)
+class ModelEvaluationArtifacts:
+    ARITFACTS_ROOT_DIR_PATH:Path
+    MODEL_ROOT_DIR_PATH:Path
+    EVALUATION_ROOT_DIR_PATH:Path
+    REPORT_FILE_PATH:Path
+    PREDICTION_FILE_PATH:Path
+
+
+

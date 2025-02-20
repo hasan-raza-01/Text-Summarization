@@ -25,3 +25,8 @@ MODEL:
     BASE_ESTIMATOR_NAME: base_estimator
     FINETUNED_ESTIMATOR_NAME: finetuned_estimator
     PARAMS_FILE_NAME: params.json
+  EVALUATOR:
+    ROOT_DIR_NAME: evaluation
+    REPORT_FILE_NAME: report.json
+    PREDICTION_FILE_NAME: prediction.json
+  
