@@ -84,7 +84,8 @@ class ModelTrainerComponents:
             logging.info("In start_model_training")
             # create required dir's
             create_dirs(self.__model_trainer_config.ARITFACTS_ROOT_DIR_PATH)
-            create_dirs(self.__model_trainer_config.MODEL_TRAINER_ROOT_DIR_PATH)
+            create_dirs(self.__model_trainer_config.MODEL_ROOT_DIR_PATH)
+            create_dirs(self.__model_trainer_config.TRAINER_ROOT_DIR_PATH)
             logging.info("create required dir's")
 
             # collect data

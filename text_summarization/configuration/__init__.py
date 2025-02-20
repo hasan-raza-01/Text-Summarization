@@ -37,9 +37,10 @@ class DataTransformationConfig:
 @dataclass(frozen=True)
 class ModelTrainerConfig:
     ARITFACTS_ROOT_DIR_PATH = os.path.join(ModelTrainerConstants.ARITFACTS_ROOT_DIR_NAME)
-    MODEL_TRAINER_ROOT_DIR_PATH = os.path.join(ARITFACTS_ROOT_DIR_PATH, ModelTrainerConstants.MODEL_TRAINER_ROOT_DIR_NAME)
-    BASE_ESTIMATOR_PATH = os.path.join(MODEL_TRAINER_ROOT_DIR_PATH, ModelTrainerConstants.BASE_ESTIMATOR_NAME)
-    FINETUNED_ESTIMATOR_PATH = os.path.join(MODEL_TRAINER_ROOT_DIR_PATH, ModelTrainerConstants.FINETUNED_ESTIMATOR_NAME)
+    MODEL_ROOT_DIR_PATH = os.path.join(ARITFACTS_ROOT_DIR_PATH, ModelTrainerConstants.MODEL_ROOT_DIR_NAME)
+    TRAINER_ROOT_DIR_PATH = os.path.join(MODEL_ROOT_DIR_PATH, ModelTrainerConstants.TRAINER_ROOT_DIR_NAME)
+    BASE_ESTIMATOR_PATH = os.path.join(TRAINER_ROOT_DIR_PATH, ModelTrainerConstants.BASE_ESTIMATOR_NAME)
+    FINETUNED_ESTIMATOR_PATH = os.path.join(TRAINER_ROOT_DIR_PATH, ModelTrainerConstants.FINETUNED_ESTIMATOR_NAME)
     PARAMS_FILE_PATH = Path(ModelTrainerConstants.PARAMS_FILE_NAME)
 
 

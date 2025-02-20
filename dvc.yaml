@@ -16,4 +16,16 @@ stages:
       - artifacts/data/ingestion/ingested/samsum_dataset/test
     outs:
       - artifacts/data/transformation
+  model_trainer:
+    cmd: python text_summarization\pipeline\stage_03_model_trainer.py
+    deps:
+      - text_summarization\pipeline\stage_03_model_trainer.py
+      - config/config.yaml
+      - artifacts\data\transformation\train
+      - artifacts\data\transformation\validation
+      - artifacts\data\transformation\test
+      - artifacts\data\transformation\tokenizer
+    outs:
+      - artifacts/model/training
+  
   

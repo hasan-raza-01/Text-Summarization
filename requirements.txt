@@ -12,5 +12,6 @@ rouge
 accelerate
 rouge-score
 evaluate
+tqdm
 
 # -e .
