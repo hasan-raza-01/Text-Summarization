@@ -2,7 +2,8 @@ from text_summarization.constants import (
     DataIngestionConstants,
     DataTransformationConstants,
     ModelTrainerConstants,
-    ModelEvaluationConstants
+    ModelEvaluationConstants,
+    PredictionConstants
 )
 from dataclasses import dataclass
 from pathlib import Path
@@ -66,5 +67,11 @@ class ModelEvaluationConfig:
     EVALUATION_ROOT_DIR_PATH = Path(os.path.join(MODEL_ROOT_DIR_PATH, ModelEvaluationConstants.EVALUATION_ROOT_DIR_NAME))
     REPORT_FILE_PATH = Path(os.path.join(EVALUATION_ROOT_DIR_PATH, ModelEvaluationConstants.REPORT_FILE_NAME))
     PREDICTION_FILE_PATH = Path(os.path.join(EVALUATION_ROOT_DIR_PATH, f"{__timestamp}_{ModelEvaluationConstants.PREDICTION_FILE_NAME}"))
+
+
+@dataclass(frozen=True)
+class PredictionConfig:
+    PREDICTION_ROOT_DIR_PATH = Path(PredictionConstants.PREDICTION_ROOT_DIR_NAME)
+    FILE_PATH = os.path.join(PREDICTION_ROOT_DIR_PATH, PredictionConstants.FILE_NAME)
 
 

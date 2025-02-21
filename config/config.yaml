@@ -30,3 +30,6 @@ MODEL:
     REPORT_FILE_NAME: report.json
     PREDICTION_FILE_NAME: prediction.json
   
+PREDICTION: 
+  ROOT_DIR_NAME: predictions
+  FILE_NAME: output.json

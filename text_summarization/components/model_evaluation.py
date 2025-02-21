@@ -125,6 +125,13 @@ class ModelEvaluationComponents:
             report_path = self.__model_evaluation_config.REPORT_FILE_PATH
             save_json(rouge_dict, report_path)
 
+            # save artifacts dir path
+            json_data = {
+                "TOKENIZER_PATH": str(self.__data_transformation_config.TOKENIZER_PATH),
+                "MODEL_PATH": str(self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH)
+            }
+            save_json(data=json_data, path="tokenizer_and_model_path.json")
+
             return self.__model_evaluation_config
         except Exception as e:
             logging.exception(e)
