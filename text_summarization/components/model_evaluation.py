@@ -6,7 +6,7 @@ from text_summarization.utils import save_json, create_dirs
 from datasets import load_from_disk, load_metric
 from text_summarization.logger import logging
 from dataclasses import dataclass
-import datasets, torch, sys
+import datasets, torch, sys, os
 from tqdm import tqdm
 
 
@@ -103,8 +103,9 @@ class ModelEvaluationComponents:
 
             device = "cuda" if torch.cuda.is_available() else "cpu"
             tokenizer = AutoTokenizer.from_pretrained(self.__data_transformation_config.TOKENIZER_PATH)
-            model_pegasus = AutoModelForSeq2SeqLM.from_pretrained(self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH).to(device)
-        
+            model_path = os.path.join(self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH, "checkpoint-2")
+            model_pegasus = AutoModelForSeq2SeqLM.from_pretrained(model_path).to(device)
+
             #loading data 
             # dataset = load_from_disk(self.__data_transformation_config.TEST_DATA_DIR_PATH)
             # loading less record data for faster report
@@ -112,7 +113,7 @@ class ModelEvaluationComponents:
 
             rouge_names = ["rouge1", "rouge2", "rougeL", "rougeLsum"]
     
-            rouge_metric = load_metric('rouge')
+            rouge_metric = load_metric('rouge', trust_remote_code=True)
 
             score = self.calculate_metric_on_test_ds(
                 dataset, rouge_metric, model_pegasus, tokenizer, batch_size = 1, 
@@ -127,10 +128,11 @@ class ModelEvaluationComponents:
 
             # save artifacts dir path
             json_data = {
+                "ARTIFACTS_PATH": str(self.__model_trainer_config.ARITFACTS_ROOT_DIR_PATH),
                 "TOKENIZER_PATH": str(self.__data_transformation_config.TOKENIZER_PATH),
-                "MODEL_PATH": str(self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH)
+                "MODEL_PATH": str(model_path)
             }
-            save_json(data=json_data, path="tokenizer_and_model_path.json")
+            save_json(data=json_data, path="paths.json")
 
             return self.__model_evaluation_config
         except Exception as e:

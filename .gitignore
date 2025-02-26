@@ -183,5 +183,4 @@ artifacts/
 *.egg-info
 template.py
 .env
-pegasus_finetuned_model
 predictions/

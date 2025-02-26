@@ -1,0 +1,5 @@
+{
+    "ARTIFACTS_PATH": "artifacts\\2025_02_26_13_12_09",
+    "TOKENIZER_PATH": "artifacts\\2025_02_26_13_12_09\\data\\transformation\\tokenizer",
+    "MODEL_PATH": "artifacts\\2025_02_26_13_12_09\\model\\training\\finetuned_estimator\\checkpoint-2"
+}

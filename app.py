@@ -7,10 +7,19 @@ from text_summarization.configuration import PredictionConfig
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from text_summarization.utils import load_json
 from fastapi import FastAPI
-import uvicorn
+import uvicorn, torch, os
 
 
-"What is Text Summarization?"
+# What is Text Summarization?
+
+paths = load_json("paths.json")
+if not os.path.exists(paths["TOKENIZER_PATH"]) or not os.path.exists(paths["MODEL_PATH"]):
+    training_pipeline = TrainingPipeline()
+    training_pipeline.run()
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+tokenizer = AutoTokenizer.from_pretrained(paths["TOKENIZER_PATH"])
+model = AutoModelForSeq2SeqLM.from_pretrained(paths["MODEL_PATH"]).to(device)
 
 app = FastAPI()
 
@@ -37,9 +46,6 @@ async def training():
 @app.post("/predict")
 async def predict_route(text:str):
     try:
-        tokenizer_and_model_path = load_json("tokenizer_and_model_path.json")
-        tokenizer = AutoTokenizer.from_pretrained(tokenizer_and_model_path["TOKENIZER_PATH"])
-        model = AutoModelForSeq2SeqLM.from_pretrained(tokenizer_and_model_path["MODEL_PATH"])
         output_file_path = PredictionConfig.FILE_PATH
 
         obj = PredictionPipeline()

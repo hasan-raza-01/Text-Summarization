@@ -63,7 +63,7 @@ class ModelTrainerComponents:
             data_collator=data_collator,
             train_dataset=train_data,
             eval_dataset=validation_data,
-            callbacks=[]
+            callbacks=callbacks
             )
             logging.info("{{Trainer}} initialized")
 
@@ -106,6 +106,7 @@ class ModelTrainerComponents:
             # get model
             repo_id = self.__data_transformation_config.MODEL_REPO_ID
             base_model_path = self.__model_trainer_config.BASE_ESTIMATOR_PATH
+            finetuned_model_path = self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH
             model = self.__get_model(repo_id, base_model_path)
 
 
@@ -116,6 +117,7 @@ class ModelTrainerComponents:
             params = load_json(self.__model_trainer_config.PARAMS_FILE_PATH)
             training_args = TrainingArguments(
                 **params,
+                output_dir=finetuned_model_path,
                 # If using a GPU cluster, you might want to enable fp16 for faster training
                 fp16=True if os.environ.get("USE_FP16", "false").lower() == "true" else False,
             )
@@ -134,9 +136,7 @@ class ModelTrainerComponents:
             # start training
             trainer.train()
 
-            # save model
-            finetuned_model_path = self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH
-            model.save_pretrained(finetuned_model_path)
+            logging.info(f"finetuned model saved at {finetuned_model_path}")
 
             logging.info("Out start_model_training")
             return self.__model_trainer_config

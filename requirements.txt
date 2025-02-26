@@ -6,11 +6,13 @@ datasets==2.21.0
 transformers==4.49.0
 langchain-community==0.3.17
 langchain-huggingface==0.1.2
-torch==2.6.0+cpu
+torch==2.6.0
 rouge-score==0.1.2
 rouge==1.0.1
 accelerate==1.4.0
 evaluate==0.4.3
 tqdm==4.67.1
+protobuf==5.29.3
+sentencepiece==0.2.0
 
-# -e .
+-e .

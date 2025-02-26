@@ -55,6 +55,12 @@ class ModelEvaluationConstants:
 
 
 @dataclass(frozen=True)
+class TrainingPipelineConstants:
+    AWS_BUCKET_NAME = "adminprojects"
+    AWS_BUCKET_FOLDER_NAME = "pegasus_summarization"
+
+
+@dataclass(frozen=True)
 class PredictionConstants:
     PREDICTION_ROOT_DIR_NAME = CONFIG.PREDICTION.ROOT_DIR_NAME
     FILE_NAME = CONFIG.PREDICTION.FILE_NAME
