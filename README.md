@@ -53,10 +53,6 @@ nano /home/ubuntu/.env
 
 ## reconnect with runner
 ```
-cd actions-runner
-```
-
-```
-./run.sh
+cd actions-runner && ./run.sh
 ```
 
