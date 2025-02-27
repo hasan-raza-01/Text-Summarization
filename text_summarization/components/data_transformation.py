@@ -8,7 +8,6 @@ from text_summarization.logger import logging
 from text_summarization.utils import create_dirs
 from transformers import AutoTokenizer
 from datasets import load_from_disk
-from pathlib import Path
 import torch, os, sys
 
 
@@ -121,11 +120,6 @@ class DataTranformationComponents:
 
             transformed_test_data.save_to_disk(test_data_path)
             logging.info(f"transformed test data saved at {test_data_path}")
-
-            # save tokenizer to local
-            tokenizer_path = self.__data_transformation_config.TOKENIZER_PATH
-            tokenizer.save_pretrained(Path(tokenizer_path))
-            logging.info(f"tokenizer saved at {tokenizer_path}")
 
             logging.info("Out start_data_transformation")
             return self.__data_transformation_config

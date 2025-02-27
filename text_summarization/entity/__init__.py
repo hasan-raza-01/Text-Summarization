@@ -24,7 +24,6 @@ class DataTransformationArtifacts:
     TRAIN_DATA_DIR_PATH:Path
     VALIDATION_DATA_DIR_PATH:Path
     TEST_DATA_DIR_PATH:Path
-    TOKENIZER_PATH:Path
     MODEL_REPO_ID:str
 
 
@@ -33,8 +32,6 @@ class ModelTrainerArtifacts:
     ARITFACTS_ROOT_DIR_PATH:Path
     MODEL_ROOT_DIR_PATH:Path
     TRAINER_ROOT_DIR_PATH:Path
-    BASE_ESTIMATOR_PATH:Path
-    FINETUNED_ESTIMATOR_PATH:Path
     PARAMS_FILE_PATH:Path
 
 

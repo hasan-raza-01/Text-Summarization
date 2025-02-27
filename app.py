@@ -12,14 +12,14 @@ import uvicorn, torch, os
 
 # What is Text Summarization?
 
-paths = load_json("paths.json")
-if not os.path.exists(paths["TOKENIZER_PATH"]) or not os.path.exists(paths["MODEL_PATH"]):
+if not os.path.exists(load_json("paths.json")["MODELS_PATH"]):
     training_pipeline = TrainingPipeline()
     training_pipeline.run()
 
+paths = load_json("paths.json")
 device = "cuda" if torch.cuda.is_available() else "cpu"
-tokenizer = AutoTokenizer.from_pretrained(paths["TOKENIZER_PATH"])
-model = AutoModelForSeq2SeqLM.from_pretrained(paths["MODEL_PATH"]).to(device)
+tokenizer = AutoTokenizer.from_pretrained(paths["MODELS_PATH"])
+model = AutoModelForSeq2SeqLM.from_pretrained(paths["MODELS_PATH"]).to(device)
 
 app = FastAPI()
 

@@ -102,9 +102,9 @@ class ModelEvaluationComponents:
             create_dirs(self.__model_evaluation_config.EVALUATION_ROOT_DIR_PATH)
 
             device = "cuda" if torch.cuda.is_available() else "cpu"
-            tokenizer = AutoTokenizer.from_pretrained(self.__data_transformation_config.TOKENIZER_PATH)
-            model_path = os.path.join(self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH, "checkpoint-2")
-            model_pegasus = AutoModelForSeq2SeqLM.from_pretrained(model_path).to(device)
+            models_path = os.path.join(self.__model_trainer_config.TRAINER_ROOT_DIR_PATH, "checkpoint-2")
+            tokenizer = AutoTokenizer.from_pretrained(models_path)
+            model_pegasus = AutoModelForSeq2SeqLM.from_pretrained(models_path).to(device)
 
             #loading data 
             # dataset = load_from_disk(self.__data_transformation_config.TEST_DATA_DIR_PATH)
@@ -129,8 +129,7 @@ class ModelEvaluationComponents:
             # save artifacts dir path
             json_data = {
                 "ARTIFACTS_PATH": str(self.__model_trainer_config.ARITFACTS_ROOT_DIR_PATH),
-                "TOKENIZER_PATH": str(self.__data_transformation_config.TOKENIZER_PATH),
-                "MODEL_PATH": str(model_path)
+                "MODELS_PATH": str(models_path)
             }
             save_json(data=json_data, path="paths.json")
 

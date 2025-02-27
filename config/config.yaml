@@ -16,14 +16,11 @@ DATA:
     TRAIN_DATA_DIR_NAME: train
     VALIDATION_DATA_DIR_NAME: validation
     TEST_DATA_DIR_NAME: test
-    TOKENIZER_NAME: tokenizer
 
 MODEL: 
   ROOT_DIR_NAME: model
   TRAINER:
     ROOT_DIR_NAME: training
-    BASE_ESTIMATOR_NAME: base_estimator
-    FINETUNED_ESTIMATOR_NAME: finetuned_estimator
     PARAMS_FILE_NAME: params.json
   EVALUATOR:
     ROOT_DIR_NAME: evaluation
@@ -33,3 +30,4 @@ MODEL:
 PREDICTION: 
   ROOT_DIR_NAME: predictions
   FILE_NAME: output.json
+  

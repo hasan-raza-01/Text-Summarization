@@ -19,12 +19,11 @@ class ModelTrainerComponents:
     __model_trainer_config:ModelTrainerArtifacts
 
     @staticmethod
-    def __get_model(repo_id:str, path:Path) -> AutoModelForSeq2SeqLM:
+    def __get_model(repo_id:str) -> AutoModelForSeq2SeqLM:
         """get model from repo id
 
         Args:
             repo_id (str): repository id of model
-            path (Path): path to save model locally
 
         Returns:
             AutoModelForSeq2SeqLM: model loaded from repo_id
@@ -39,10 +38,6 @@ class ModelTrainerComponents:
             # get model from hugging face
             model = AutoModelForSeq2SeqLM.from_pretrained(repo_id).to(device)
             logging.info(f"model collected from {{{repo_id}}}")
-
-            # save model in locals
-            model.save_pretrained(path)
-            logging.info(f"{{{repo_id.split("/")[-1]}}} saved at {{{path}}}")
 
             logging.info("Out __get_model")
             return model
@@ -98,16 +93,14 @@ class ModelTrainerComponents:
 
             logging.info("train and validation data collected for model training")
 
-            # get tokenizer
-            tokenizer_path = self.__data_transformation_config.TOKENIZER_PATH
-            tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
-            logging.info(f"tokenizer loaded from {{{tokenizer_path}}}")
 
-            # get model
             repo_id = self.__data_transformation_config.MODEL_REPO_ID
-            base_model_path = self.__model_trainer_config.BASE_ESTIMATOR_PATH
-            finetuned_model_path = self.__model_trainer_config.FINETUNED_ESTIMATOR_PATH
-            model = self.__get_model(repo_id, base_model_path)
+            # get tokenizer
+            tokenizer = AutoTokenizer.from_pretrained(repo_id)
+            logging.info(f"tokenizer collected from {repo_id}")
+            # get model
+            model = self.__get_model(repo_id)
+            logging.info(f"model collected from {repo_id}")
 
 
             # get datacollator
@@ -115,6 +108,8 @@ class ModelTrainerComponents:
 
             # Set up training arguments
             params = load_json(self.__model_trainer_config.PARAMS_FILE_PATH)
+            finetuned_model_path = self.__model_trainer_config.TRAINER_ROOT_DIR_PATH
+
             training_args = TrainingArguments(
                 **params,
                 output_dir=finetuned_model_path,
