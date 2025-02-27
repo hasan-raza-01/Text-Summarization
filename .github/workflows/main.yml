@@ -91,7 +91,7 @@ jobs:
        
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 8080:8000 --ipc="host" --name=textsummarization --env-file /home/ubuntu/.env ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+         docker run -d -p 8080:8080 --ipc="host" --name=textsummarization --env-file /home/ubuntu/.env ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
       - name: Clean previous images, containers and volumes
         run: |
          docker system prune -af
