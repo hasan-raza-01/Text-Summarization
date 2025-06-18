@@ -175,7 +175,6 @@ cython_debug/
 # Folders
 venv/
 __pycache__/
-notebook/
 logs/
 artifacts/
 
