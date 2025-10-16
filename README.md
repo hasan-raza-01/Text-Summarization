@@ -5,6 +5,7 @@ An end-to-end, NLP-driven pipeline for automated text summarization engineered f
 ---
 
 ## 📂 Repository Structure
+```
 .
 ├── .github/workflows/ # CI/CD automation pipelines
 ├── config/ # Project-wide YAML configuration
@@ -22,6 +23,7 @@ An end-to-end, NLP-driven pipeline for automated text summarization engineered f
 ├── params.json # Training hyperparameters
 ├── requirements.txt # Python dependencies
 └── setup.py # Package installer
+```
 
 ---
 
