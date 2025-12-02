@@ -7,22 +7,62 @@ An end-to-end, NLP-driven pipeline for automated text summarization engineered f
 ## 📂 Repository Structure
 ```
 .
-├── .github/workflows/ # CI/CD automation pipelines
-├── config/ # Project-wide YAML configuration
-├── notebook/ # Exploratory analysis & experiments
-├── src/
-│ └── text_summarization/ # Package source
-│ ├── configuration.py # Config dataclasses
-│ ├── components/ # Data ingestion, preprocessing, training modules
-│ ├── pipeline/ # Ingestion, transformation, training, prediction
-│ ├── utils/ # Model helpers, file I/O utilities
-│ ├── logger.py # Structured logging setup
-│ └── exception.py # Custom exception handling
-├── Dockerfile # Container specification
-├── dvc.yaml / dvc.lock # DVC pipeline stages & lock file
-├── params.json # Training hyperparameters
-├── requirements.txt # Python dependencies
-└── setup.py # Package installer
+├── .github/
+│   └── workflows/             # CI/CD pipeline workflows for automated deployment
+├── config/
+│   └── config.yaml            # Project configuration: artifact paths, model settings, data sources
+├── less_records_artifacts/    # Sample artifacts from experiments with smaller dataset
+├── notebook/                  # Jupyter notebooks for experimentation and prototyping
+│   ├── data/                  # Sample data for notebook experiments
+│   ├── EDA.ipynb              # Exploratory data analysis
+│   ├── data_ingestion.ipynb   # Data ingestion prototyping
+│   ├── data_transformation.ipynb # Data transformation experimentation
+│   ├── model_trainer.ipynb    # Model training and fine-tuning experiments
+│   ├── model_evaluation.ipynb # Model evaluation with ROUGE metrics
+│   ├── model_prediction.ipynb # Prediction pipeline testing
+│   └── trail.ipynb            # Experimental trials
+├── text_summarization/        # Main package source code
+│   ├── __init__.py
+│   ├── cloud/
+│   │   └── __init__.py        # Cloud storage operations (S3, model registry)
+│   ├── components/            # Core pipeline components
+│   │   ├── __init__.py
+│   │   ├── data_ingestion.py        # Downloads and extracts dataset from HuggingFace
+│   │   ├── data_transformation.py   # Tokenizes text and prepares data for model training
+│   │   ├── model_trainer.py         # Fine-tunes transformer model (PEGASUS/T5) for summarization
+│   │   └── model_evaluation.py      # Evaluates model using ROUGE scores
+│   ├── configuration/
+│   │   └── __init__.py        # Configuration manager: reads config.yaml, creates entity objects
+│   ├── constants/
+│   │   └── __init__.py        # Project constants: file paths, model names, environment variables
+│   ├── entity/
+│   │   └── __init__.py        # Dataclass entities: artifact and configuration objects
+│   ├── exception/
+│   │   └── __init__.py        # Custom exception handling with detailed error messages
+│   ├── logger/
+│   │   └── __init__.py        # Structured logging setup with timestamps
+│   ├── pipeline/              # Orchestration layer for training and prediction pipelines
+│   │   ├── __init__.py
+│   │   ├── stage_01_data_ingestion.py      # Orchestrates data ingestion component
+│   │   ├── stage_02_data_transformation.py # Orchestrates data transformation component
+│   │   ├── stage_03_model_trainer.py       # Orchestrates model training component
+│   │   ├── stage_04_model_evaluation.py    # Orchestrates model evaluation component
+│   │   ├── prediction_pipeline/
+│   │   │   └── __init__.py    # Prediction pipeline: loads model and generates summaries
+│   │   └── training_pipeline/
+│   │       └── __init__.py    # Training pipeline: executes all 4 stages sequentially
+│   └── utils/
+│       └── __init__.py        # Utility functions: YAML I/O, model loading, common operations
+├── .dockerignore              # Excludes unnecessary files from Docker image build
+├── .gitignore                 # Git exclusions: virtual environments, artifacts, model checkpoints
+├── Dockerfile                 # Container image for production deployment
+├── README.md                  # Project documentation and setup instructions
+├── app.py                     # FastAPI application: /predict endpoint for text summarization
+├── main.py                    # Training pipeline orchestrator: runs all 4 stages
+├── params.json                # Hyperparameters for model training (learning rate, batch size, epochs)
+├── paths.json                 # Important file paths configuration
+├── requirements.txt           # Python dependencies: transformers, datasets, evaluate, FastAPI
+└── setup.py                   # Package installer: configures package for pip installation
 ```
 
 ---
