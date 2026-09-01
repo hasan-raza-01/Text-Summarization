@@ -10,3 +10,6 @@ artifacts/
 template.py
 .env
 predictions/
+trainer_output/
+
+paths.json 

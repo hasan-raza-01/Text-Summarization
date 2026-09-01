@@ -144,3 +144,13 @@ def evaluate_summary(reference:str, generated:str)->list[dict]:
         raise CustomException(e, sys)
 
 
+def use_cloud(): 
+    import os 
+    env_vars = [
+        "AWS_ACCESS_KEY_ID", 
+        "AWS_SECRET_ACCESS_KEY", 
+        "AWS_REGION", 
+        "AWS_ECR_LOGIN_URI", 
+        "ECR_REPOSITORY_NAME"
+    ]
+    return all([os.getenv(var) for var in env_vars])

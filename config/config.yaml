@@ -5,6 +5,7 @@ DATA:
 
   INGESTION:
     ROOT_DIR_NAME: ingestion
+    SOURCE_URL: https://github.com/hasan-raza-01/Data/raw/main/Summarizer-Data.zip
     FEATURE_STORE:
       ROOT_DIR_NAME: feature_store
       ZIP_FILE_NAME: data.zip

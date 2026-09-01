@@ -13,7 +13,7 @@ from text_summarization.configuration import (
     ModelTrainerConfig,
     ModelEvaluationConfig
 )
-from text_summarization.utils import load_json
+from text_summarization.utils import load_json, use_cloud
 import sys, os
 
 
@@ -58,14 +58,14 @@ class TrainingPipeline:
 
         # model evaluation =====> step 4
         model_evaluation = ModelEvaluationComponents(
-            data_transformation_artifacts,
             model_trainer_artifacts,
             ModelEvaluationConfig
         )
         model_evaluation_artifacts = model_evaluation.evaluate()
         
         # sync model artifacts to S3 =====> step 5
-        self.push_to_cloud()
+        if use_cloud():
+            self.push_to_cloud()
         
         return model_evaluation_artifacts
     

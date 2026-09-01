@@ -1,3 +1,10 @@
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
+if not os.getenv("USE_LESS_RECORDS"):
+    os.environ["USE_LESS_RECORDS"]="false"
+
 from starlette.responses import RedirectResponse
 from fastapi.responses import Response
 from text_summarization.logger import logging
@@ -50,6 +57,6 @@ async def predict_route(text:str):
     
 
 if __name__=="__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    uvicorn.run('app:app', host="0.0.0.0", port=8080, reload=True)
 
 

@@ -5,7 +5,6 @@ from text_summarization.exception import CustomException
 from text_summarization.logger import logging
 from dataclasses import dataclass
 import torch, sys, os
-from pathlib import Path
 import datasets
 
 
@@ -53,7 +52,7 @@ class ModelTrainerComponents:
             # Initialize the Trainer
             trainer = Trainer(
             model=model,
-            tokenizer=tokenizer,
+            processing_class=tokenizer,
             args=training_args,
             data_collator=data_collator,
             train_dataset=train_data,
@@ -81,15 +80,19 @@ class ModelTrainerComponents:
             create_dirs(self.__model_trainer_config.ARITFACTS_ROOT_DIR_PATH)
             create_dirs(self.__model_trainer_config.MODEL_ROOT_DIR_PATH)
             create_dirs(self.__model_trainer_config.TRAINER_ROOT_DIR_PATH)
-            logging.info("create required dir's")
+            logging.info("create required dir's")            
 
-            # collect data
-            # train_data = datasets.load_from_disk(self.__data_transformation_config.TRAIN_DATA_DIR_PATH)
-            # validation_data = datasets.load_from_disk(self.__data_transformation_config.VALIDATION_DATA_DIR_PATH)
-
-            # collect less data for faster training
-            train_data = datasets.load_from_disk("less_records_artifacts/train")
-            validation_data = datasets.load_from_disk("less_records_artifacts/validation")
+            #loading data 
+            if os.getenv("USE_LESS_RECORDS").lower()=="true":
+                # collect less data for faster training
+                train_data = datasets.load_from_disk("less_records_artifacts/train")
+                validation_data = datasets.load_from_disk("less_records_artifacts/validation")
+                logging.info("loading less record data for faster report")
+            if os.getenv("USE_LESS_RECORDS").lower()=="false":
+                # collect data
+                train_data = datasets.load_from_disk(self.__data_transformation_config.TRAIN_DATA_DIR_PATH)
+                validation_data = datasets.load_from_disk(self.__data_transformation_config.VALIDATION_DATA_DIR_PATH)
+                logging.info("loading full record data")
 
             logging.info("train and validation data collected for model training")
 
@@ -108,11 +111,14 @@ class ModelTrainerComponents:
 
             # Set up training arguments
             params = load_json(self.__model_trainer_config.PARAMS_FILE_PATH)
-            finetuned_model_path = self.__model_trainer_config.TRAINER_ROOT_DIR_PATH
+            
+            # no checkpoints saved during training   
+            if os.getenv("MAKE_CHECKPOINTS").lower()=="false": 
+                params["save_strategy"] = "no"
 
             training_args = TrainingArguments(
                 **params,
-                output_dir=finetuned_model_path,
+
                 # If using a GPU cluster, you might want to enable fp16 for faster training
                 fp16=True if os.environ.get("USE_FP16", "false").lower() == "true" else False,
             )
@@ -131,6 +137,8 @@ class ModelTrainerComponents:
             # start training
             trainer.train()
 
+            finetuned_model_path = self.__model_trainer_config.TRAINER_ROOT_DIR_PATH
+            trainer.save_model(finetuned_model_path)
             logging.info(f"finetuned model saved at {finetuned_model_path}")
 
             logging.info("Out start_model_training")

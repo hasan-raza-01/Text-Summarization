@@ -3,17 +3,17 @@ from text_summarization.entity import ModelEvaluationArtifacts
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from text_summarization.exception import CustomException
 from text_summarization.utils import save_json, create_dirs
-from datasets import load_from_disk, load_metric
+from datasets import load_from_disk
 from text_summarization.logger import logging
 from dataclasses import dataclass
 import datasets, torch, sys, os
 from tqdm import tqdm
+import evaluate as ev
 
 
 
 @dataclass
 class ModelEvaluationComponents:
-    __data_transformation_config: DataTransformationArtifacts
     __model_trainer_config: ModelTrainerArtifacts
     __model_evaluation_config: ModelEvaluationArtifacts
 
@@ -44,7 +44,7 @@ class ModelEvaluationComponents:
 
         Args:
             dataset (datasets.Dataset): test dataset to calculate model performance
-            metric_object (_type_): datasets.load_metric object
+            metric_object (_type_): evaluate.load object
             model (AutoModelForSeq2SeqLM): model for prediction
             tokenizer (AutoTokenizer): tokenizer for tokenization
             batch_size (int, optional): batch size to insert number of records at a time. Defaults to 16.
@@ -102,29 +102,29 @@ class ModelEvaluationComponents:
             create_dirs(self.__model_evaluation_config.EVALUATION_ROOT_DIR_PATH)
 
             device = "cuda" if torch.cuda.is_available() else "cpu"
-            models_path = os.path.join(self.__model_trainer_config.TRAINER_ROOT_DIR_PATH, "checkpoint-2")
+            models_path = os.path.join(self.__model_trainer_config.TRAINER_ROOT_DIR_PATH)
             tokenizer = AutoTokenizer.from_pretrained(models_path)
             model_pegasus = AutoModelForSeq2SeqLM.from_pretrained(models_path).to(device)
 
             #loading data 
-            # dataset = load_from_disk(self.__data_transformation_config.TEST_DATA_DIR_PATH)
-            # loading less record data for faster report
-            dataset = load_from_disk("less_records_artifacts/test")
-
-            rouge_names = ["rouge1", "rouge2", "rougeL", "rougeLsum"]
+            if os.getenv("USE_LESS_RECORDS").lower()=="true":
+                # loading less record data for faster report
+                dataset = load_from_disk("less_records_artifacts/test")
+                logging.info("loading less record data for faster report")
+            if os.getenv("USE_LESS_RECORDS").lower()=="false":
+                dataset = load_from_disk(self.__data_transformation_config.TEST_DATA_DIR_PATH)
+                logging.info("loading full record data")
     
-            rouge_metric = load_metric('rouge', trust_remote_code=True)
+            rouge_metric = ev.load('rouge', trust_remote_code=True)
 
             score = self.calculate_metric_on_test_ds(
                 dataset, rouge_metric, model_pegasus, tokenizer, batch_size = 1, 
                 device=device, column_text = 'dialogue', column_summary= 'summary'
             )
 
-            rouge_dict = dict((rn, score[rn].mid.fmeasure ) for rn in rouge_names )
-
             # save report
             report_path = self.__model_evaluation_config.REPORT_FILE_PATH
-            save_json(rouge_dict, report_path)
+            save_json(score, report_path)
 
             # save artifacts dir path
             json_data = {

@@ -2,8 +2,14 @@ FROM python:3.12-slim AS base-container
 WORKDIR /app
 COPY . /app
 
-RUN apt update -y && apt install awscli -y
+RUN apt-get update && apt-get upgrade -y && apt-get clean 
 
-RUN apt-get update && pip install -r requirements.txt
+RUN apt install awscli -y
 
-CMD [ "python3", "app.py"] 
+RUN pip install uv 
+
+RUN uv pip install --system -e .
+
+EXPOSE 8080
+
+CMD [ "python", "app.py"] 

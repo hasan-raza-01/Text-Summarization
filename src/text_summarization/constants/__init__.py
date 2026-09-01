@@ -3,7 +3,6 @@ from text_summarization.utils import (
 )
 from dataclasses import dataclass
 from dotenv import load_dotenv
-import os
 
 
 load_dotenv()
@@ -20,7 +19,7 @@ class DataIngestionConstants:
     # FILES
     ZIP_FILE_NAME=CONFIG.DATA.INGESTION.FEATURE_STORE.ZIP_FILE_NAME
     # URI'S
-    SOURCE_URI=os.getenv("SOURCE_URI")
+    SOURCE_URI=CONFIG.DATA.INGESTION.SOURCE_URL
 
 
 @dataclass(frozen=True)

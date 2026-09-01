@@ -53,8 +53,7 @@ class DataTranformationComponents:
             # Pre-process input text
             tokenized_record_inputs =  tokenizer(record["dialogue"], truncation=True, max_length=512).to(device)
             
-            with tokenizer.as_target_tokenizer():
-                tokenized_record_outputs =  tokenizer(record["summary"], truncation=True, max_length=128).to(device)
+            tokenized_record_outputs =  tokenizer(record["summary"], truncation=True, max_length=128).to(device)
 
             return {
                 "input_ids": tokenized_record_inputs["input_ids"], 

@@ -159,30 +159,36 @@ cd Text-Summarization
 cp .env.example .env
 ```
 #### Edit .env with your AWS credentials and configuration
-3. **Create virtual environment & install dependencies**
+3. **Install Dependencies**
+  - **Install package manager uv by astral**
+    - Official documentation: https://docs.astral.sh/uv/getting-started/installation/
+
+  - **create virtual environment with dependencies**
+    ```bash
+    uv sync
+    ```
+  - **activate the environment**
+    - *windows*
+      ```bash
+      .venv\scripts\activate
+      ```
+    - *linux*
+      ```bash
+      source .venv/bin/activate
+      ```
+  - **you can tweek params.json according to your choice**
+  
+4. **Start FastAPI application**
 ```
-pip install --upgrade pip uv
-uv venv
-.venv\Scripts\activate # Windows
-source .venv/bin/activate # Linux/Mac
-uv pip install -e .
+uv run app.py
 ```
-4. **Run the complete pipeline**
-#### Execute full DVC pipeline (data ingestion → training → evaluation)
-```
-dvc repro
-```
-5. **Start FastAPI application**
-```
-uvicorn app:app --host 0.0.0.0 --port 8000 --reload
-```
-6. **(Alternative) Docker deployment**
+5. **(Alternative) Docker deployment**
 ```
 docker build -t text-summarization:latest .
-docker run -p 8000:8000 --env-file .env text-summarization:latest
+docker run -p 8080:8080 --env-file .env text-summarization:latest
 ```
-7. **Test the API**  
-Navigate to `http://localhost:8000/docs` for interactive API documentation (Swagger UI).
+6. **Test the API**  
+Navigate to http://127.0.0.1:8080/docs for interactive API documentation (Swagger UI).
 
 ---
 
