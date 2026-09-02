@@ -173,7 +173,7 @@ cython_debug/
 # Ignores from this projects
 
 # Folders
-venv/
+.venv/
 __pycache__/
 logs/
 artifacts/

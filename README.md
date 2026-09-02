@@ -159,7 +159,7 @@ cd Text-Summarization
 cp .env.example .env
 ```
 #### Edit .env with your AWS credentials and configuration
-3. **Install Dependencies**
+3. **Manual package build/run**
   - **Install package manager uv by astral**
     - Official documentation: https://docs.astral.sh/uv/getting-started/installation/
 
@@ -176,18 +176,18 @@ cp .env.example .env
       ```bash
       source .venv/bin/activate
       ```
-  - **you can tweek params.json according to your choice**
+  - **Note: you can tweek params.json according to your choice**
   
-4. **Start FastAPI application**
+  - **Start FastAPI application**
+  ```
+  uv run app.py
+  ```
+4. **(Alternative) Docker deployment**
 ```
-uv run app.py
-```
-5. **(Alternative) Docker deployment**
-```
-docker build -t text-summarization:latest .
+docker build --no-cache -t text-summarization:latest .
 docker run -p 8080:8080 --env-file .env text-summarization:latest
 ```
-6. **Test the API**  
+5. **Test the API**  
 Navigate to http://127.0.0.1:8080/docs for interactive API documentation (Swagger UI).
 
 ---

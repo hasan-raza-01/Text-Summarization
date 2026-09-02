@@ -1,5 +1,5 @@
 # Folders
-venv/
+.venv/
 __pycache__/
 notebook/
 logs/
