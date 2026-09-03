@@ -1,6 +1,7 @@
 from text_summarization.configuration import (
     ModelTrainerConfig,
-    ModelEvaluationConfig
+    ModelEvaluationConfig, 
+    DataTransformationConfig
 )
 from text_summarization.components.model_evaluation import ModelEvaluationComponents
 from text_summarization.logger import logging
@@ -11,7 +12,7 @@ from dataclasses import dataclass
 class ModelEvaluationPipeline:
 
     def main(self) -> None:
-        self.model_evaluator = ModelEvaluationComponents(ModelTrainerConfig, ModelEvaluationConfig)
+        self.model_evaluator = ModelEvaluationComponents(DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig)
         self.model_evaluator.evaluate()
 
 

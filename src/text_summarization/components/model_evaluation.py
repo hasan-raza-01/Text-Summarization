@@ -1,4 +1,4 @@
-from text_summarization.entity import ModelTrainerArtifacts
+from text_summarization.entity import ModelTrainerArtifacts, DataTransformationArtifacts
 from text_summarization.entity import ModelEvaluationArtifacts
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from text_summarization.exception import CustomException
@@ -14,6 +14,7 @@ import evaluate as ev
 
 @dataclass
 class ModelEvaluationComponents:
+    __data_transformation_config: DataTransformationArtifacts
     __model_trainer_config: ModelTrainerArtifacts
     __model_evaluation_config: ModelEvaluationArtifacts
 
