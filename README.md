@@ -135,7 +135,7 @@ An end-to-end, NLP-driven pipeline for automated text summarization engineered f
 - **Self-Hosted GitHub Runners**  
   Configured Linux-based self-hosted runners for cost-effective CI/CD automation with background service management.
 
-- **Environment-Driven Configuration**  
+- **Environment-Driven Configuration(Optional)**  
   Manage secrets and endpoints via `.env` file:
 ```
 AWS_ACCESS_KEY_ID=your_access_key
