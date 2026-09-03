@@ -1,4 +1,4 @@
-from text_summarization.entity import DataTransformationArtifacts, ModelTrainerArtifacts
+from text_summarization.entity import ModelTrainerArtifacts
 from text_summarization.entity import ModelEvaluationArtifacts
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from text_summarization.exception import CustomException
