@@ -2,13 +2,14 @@
 .venv/
 __pycache__/
 notebook/
-logs/
-artifacts/
 
 # Files
 *.egg-info
 template.py
 .env
+
+logs/
+artifacts/
 predictions/
 trainer_output/
 
